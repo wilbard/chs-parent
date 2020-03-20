@@ -1,0 +1,73 @@
+/*
+   CSS styling examples for the Vaadin app.
+   Visit https://vaadin.com/docs/flow/theme/theming-overview.html and
+   https://vaadin.com/themes/lumo for more information.
+*/
+
+/* Example: CSS class name to center align the content . */
+.centered-content {
+  margin: 0 auto;
+  max-width: 250px;
+}
+
+a[highlight] {
+  font-weight: bold;
+}
+
+.header {
+  padding: 0 var(--lumo-space-m);
+  background-color: var(--lumo-contrast-30pct);
+}
+
+.header h4.logo {
+  font-size: 1em;
+  margin: var(--lumo-space-m);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.header .nav-bar {
+  margin-right: 1em;
+}
+
+.header .nav-bar #settings {
+  horiz-align: right;
+}
+
+.info-header {
+  padding: 0 var(--lumo-space-m);
+}
+
+.dashboard-view .welcome-message {
+  font-size: 4em;
+  margin: 1em 0;
+}
+
+
+.side-menu {
+  margin-left: 0 var(--lumo-space-m);
+}
+
+.side-menu .side-link {
+  margin-left: 0 var(--lumo-space-m);
+}
+
+.side-menu .side-link .side-icons {
+  font-size: 96px;
+}
+
+.list-user-view .action-bar .action-bar-container .add-user-button {
+  float: right !important;
+  margin-right: 0px;
+}
+
+@media all and (max-width: 768px) {
+  .list-user-view.editing .action-bar,
+  .list-user-view.editing .user-grid {
+    display: none;
+  }
+}
+
+.list-user-view .user-form .user-form-layout, .list-user-view.editing .user-form .user-form-layout {
+  border: 1px groove;
+}

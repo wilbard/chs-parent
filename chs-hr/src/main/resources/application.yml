@@ -1,0 +1,56 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/chs?verifyServerCertificate=false&useSSL=false&requireSSL=false
+    username: chs
+    password: chs@123
+    driver-class-name: com.mysql.jdbc.Driver
+  #artemis:
+  #  mode: native
+  #  host: localhost
+  #  port: 61616
+  #  user: maint
+  #  password: maint@100%
+  #data:
+  #  elasticsearch:
+  #    cluster-name: maint
+  #    host: 127.0.0.1
+  #    port: 9300
+  #autoconfigure:
+  #  exclude: org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration
+#jms:
+#  queue:
+#    client:
+#      register: GATEWAY-CLIENT
+#      register_es: GATEWAY-CLIENT-ES
+server:
+  port: 9022
+
+jdbc:
+  driverClassName: com.mysql.jdbc.Driver
+  url: jdbc:mysql://127.0.0.1:3306/chs?verifyServerCertificate=false&useSSL=false&requireSSL=false
+  user: chs
+  pass: chs@123
+  hibernate:
+    dialect: org.hibernate.dialect.MySQL5Dialect
+
+security:
+  oauth2:
+    client:
+      client-id: chs
+      client-secret: code@chs
+      scope: read,write
+      auto-approve-scopes: '.*'
+vaadin:
+  compatibilityMode: false
+
+logging:
+  level:
+    org:
+      atmosphere: warn
