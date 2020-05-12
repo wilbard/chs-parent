@@ -6,7 +6,9 @@ import com.chs.db.repository.RoleRepository;
 import com.chs.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -111,6 +113,14 @@ public class UserService {
             return this.userRepository.findAll(pageable);
         } else {
             return this.userRepository.findAllByFullNameLike(filterText, pageable);
+        }
+    }
+
+    public Page<User> findAllPages(String filterText, int offset, int limit, Sort sort) {
+        if (filterText == null || filterText.isEmpty()) {
+            return this.userRepository.findAll(PageRequest.of(offset, limit, sort));
+        } else {
+            return this.userRepository.findAllByFullNameLike(filterText, PageRequest.of(offset, limit, sort));
         }
     }
 

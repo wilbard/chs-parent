@@ -41,9 +41,9 @@ public class User implements Cloneable {
     @Column(name = "email")
     private String email = "none";
 
-    @Column(name = "enabled")
+    @Column(name = "enabled", columnDefinition = "boolean default false")
     private boolean enabled = false;
-    @Column(name = "account_non_locked")
+    @Column(name = "account_non_locked", columnDefinition = "boolean default true")
     private boolean accountNonLocked = true;
 
     //@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

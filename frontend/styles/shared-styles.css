@@ -61,7 +61,7 @@ a[highlight] {
   margin-right: 0px;
 }
 
-@media all and (max-width: 768px) {
+@media (max-width: 768px) {
   .list-user-view.editing .action-bar,
   .list-user-view.editing .user-grid {
     display: none;

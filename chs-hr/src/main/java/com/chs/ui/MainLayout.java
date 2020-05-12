@@ -17,6 +17,8 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.icons.VaadinIcons;
+import org.vaadin.teemusa.sidemenu.SideMenu;
 
 @CssImport("./styles/shared-styles.css")
 public class MainLayout extends AppLayout {
@@ -118,16 +120,6 @@ public class MainLayout extends AppLayout {
             usersLink.addClassName("side-link");
             usersLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        /*SideMenu sideMenu = new SideMenu();
-        sideMenu.addMenuItem("Employees Management", FontAwesome.USER, () -> {
-            sideMenu.addMenuItem("Departments", () -> Notification.show("Departments"));
-            sideMenu.addMenuItem("Employees", () -> Notification.show("Employees"));
-        });
-        sideMenu.addMenuItem("Assets Management", FontAwesome.DROPBOX, () -> {
-            sideMenu.addMenuItem("Assets Acquisition", () -> Notification.show("Assets Acquisition"));
-            sideMenu.addMenuItem("Assets Consumption", () -> Notification.show("Assets Consumption"));
-        });*/
-
             RouterLink reportsLink = new RouterLink("Reports", ReportView.class);
             Icon reportsIcon = VaadinIcon.FILE_PRESENTATION.create();
             reportsIcon.addClassName("side-icons");
@@ -137,6 +129,13 @@ public class MainLayout extends AppLayout {
             reportsLink.setHighlightCondition(HighlightConditions.sameLocation());
 
             VerticalLayout sideBarLayout = new VerticalLayout(dashboardLink, reportsLink);
+
+            SideMenu sideMenu = new SideMenu();
+            sideMenu.addMenuItem("Dashboard", VaadinIcons.HOME, () -> {
+                VerticalLayout content = new VerticalLayout();
+                content.addComponentAsFirst(dashboardLink);
+            });
+
             sideBarLayout.addClassName("side-menu");
 
             addToDrawer(sideBarLayout);

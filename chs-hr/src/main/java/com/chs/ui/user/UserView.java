@@ -13,16 +13,22 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.provider.ConfigurableFilterDataProvider;
+import com.vaadin.flow.data.provider.*;
+import com.vaadin.flow.data.provider.hierarchy.TreeData;
+import com.vaadin.flow.data.provider.hierarchy.TreeDataProvider;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.vaadin.klaudeta.PaginatedGrid;
 
 import javax.annotation.PostConstruct;
 import java.awt.print.Pageable;
-import java.util.Arrays;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @PageTitle("CHS | Users")
 @Route(value = "users", layout = MainLayout.class)
@@ -36,7 +42,7 @@ public class UserView extends VerticalLayout {
     private UsersProvider usersProvider;
 
     private  UserForm form;
-    Grid<User> grid = new Grid<>(User.class);
+    PaginatedGrid<User> grid = new PaginatedGrid<>();
     TextField filterText = new TextField();
     Button addUserButton = new Button(  "Add User");
 
@@ -56,15 +62,27 @@ public class UserView extends VerticalLayout {
         userLayout.setSizeFull();
         userLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         userLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        grid.setSizeFull();
         grid.setMinHeight("70%");
-        form.setMaxWidth("30%");
-        userLayout.add(grid, form);
+        grid.setPageSize(15);
+        grid.setPaginatorSize(5);
+        grid.setPage(1);
+
+        VerticalLayout listLayout = new VerticalLayout();
+        listLayout.setSizeFull();
+        listLayout.add(grid);
+        listLayout.setHorizontalComponentAlignment(Alignment.START, grid);
+
+        form.setMinWidth("30%");
+        userLayout.add(listLayout, form);
 
         Div content = new Div(userLayout);
         content.addClassName("content");
         content.setSizeFull();
 
         add(getToolBar(), content);
+
+        /*Predicate<User> byName = user -> user.getFullName().contains(filterText.getValue());*/
 
         //grid.setDataProvider(usersProvider);
         ConfigurableFilterDataProvider<User, Void, String> wrapper = usersProvider.withConfigurableFilter();
@@ -76,8 +94,27 @@ public class UserView extends VerticalLayout {
             }
             wrapper.setFilter(filter);
         });
+
         updateList();
         closeEditor();
+
+        //Test
+        /*
+        List<User> users = userService.findAll();
+        ListDataProvider<User> dataProvider = DataProvider.ofCollection(users);
+        dataProvider.setSortComparator(Comparator.comparing(User::getFullName)::compare);
+        dataProvider.setSortOrder(User::getFullName, SortDirection.DESCENDING);
+        dataProvider.setFilter(user -> user.getFullName() != null);
+        dataProvider.setFilter(User::getFullName, name -> name.contains(filterText.getValue()));
+        */
+        /*
+        Collection<User> users = userService.findAll();
+        TreeData<User> data = new TreeData<>();
+        data.addItems(null, users);
+        users.forEach(user -> data.addItems(user, user.getFullName()));
+        TreeDataProvider<User> dataProvider = new TreeDataProvider<>(data);
+        */
+        //test
     }
 
     private void saveUser(UserForm.SaveEvent evt) {
@@ -129,8 +166,11 @@ public class UserView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassName("user-grid");
         grid.setSizeFull();
-        grid.setColumns("fullName", "phoneNumber", "email");
-        grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        /*grid.setColumns("fullName", "phoneNumber", "email");*/
+        /*grid.getColumns().forEach(col -> col.setAutoWidth(true));*/
+        grid.addColumn(User::getFullName).setHeader("Full Name").setSortable(true);
+        grid.addColumn(User::getPhoneNumber).setHeader("Phone Number").setSortable(true);
+        grid.addColumn(User::getEmail).setHeader("Email").setSortable(true);
 
         grid.asSingleSelect().addValueChangeListener(event -> editUser(event.getValue()));
     }
