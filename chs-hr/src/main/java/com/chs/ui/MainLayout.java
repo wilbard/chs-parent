@@ -107,28 +107,67 @@ public class MainLayout extends AppLayout {
 
     private void createDrawer() {
         try {
-            RouterLink dashboardLink = new RouterLink("Dashboard", DashboardView.class);
+            RouterLink dashboardLink = new RouterLink(null, DashboardView.class);
             Icon homeIcon = VaadinIcon.HOME.create();
+            homeIcon.getElement().getStyle().set("vertical-align", "baseline");
             homeIcon.addClassName("side-icons");
             homeIcon.setSize("0.2em");
             dashboardLink.addComponentAsFirst(homeIcon);
+            Span homeText = new Span("Dashboard");
+            homeText.getElement().getStyle().set("margin-left", "5px");
+            homeText.getElement().getStyle().set("vertical-align", "baseline");
+            homeText.getElement().getStyle().set("font-size", "16px");
+            dashboardLink.add(homeText);
             dashboardLink.addClassName("side-link");
+            dashboardLink.getElement().getStyle().set("width", "90%");
+            dashboardLink.getElement().getStyle().set("height", "var(--lumo-space-m)");
+            dashboardLink.getElement().getStyle().set("vertical-align", "text-bottom");
+            dashboardLink.getElement().getStyle().set("padding", "var(--lumo-space-m)");
+            dashboardLink.getElement().getStyle().set("background-color", "var(--lumo-contrast-30pct)");
             dashboardLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-            RouterLink usersLink = new RouterLink("users", UserView.class);
-            usersLink.addComponentAsFirst(VaadinIcon.USERS.create());
+            RouterLink usersLink = new RouterLink(null, UserView.class);
+            Icon usersIcon = VaadinIcon.USERS.create();
+            usersIcon.getElement().getStyle().set("vertical-align", "baseline");
+            usersIcon.addClassName("side-icons");
+            homeIcon.setSize("0.2em");
+            usersLink.addComponentAsFirst(usersIcon);
+            Span usersText = new Span("Users");
+            usersText.getElement().getStyle().set("margin-left", "5px");
+            usersText.getElement().getStyle().set("vertical-align", "baseline");
+            usersText.getElement().getStyle().set("font-size", "16px");
+            usersLink.add(usersText);
             usersLink.addClassName("side-link");
+            usersLink.getElement().getStyle().set("width", "90%");
+            usersLink.getElement().getStyle().set("height", "var(--lumo-space-m)");
+            usersLink.getElement().getStyle().set("vertical-align", "text-bottom");
+            usersLink.getElement().getStyle().set("padding", "var(--lumo-space-m)");
+            usersLink.getElement().getStyle().set("background-color", "var(--lumo-contrast-30pct)");
             usersLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-            RouterLink reportsLink = new RouterLink("Reports", ReportView.class);
+            RouterLink reportsLink = new RouterLink(null, ReportView.class);
             Icon reportsIcon = VaadinIcon.FILE_PRESENTATION.create();
+            reportsIcon.getElement().getStyle().set("vertical-align", "baseline");
             reportsIcon.addClassName("side-icons");
             reportsIcon.setSize("0.2em");
             reportsLink.addComponentAsFirst(reportsIcon);
+            Span reportssText = new Span("Reports");
+            reportssText.getElement().getStyle().set("margin-left", "5px");
+            reportssText.getElement().getStyle().set("vertical-align", "baseline");
+            reportssText.getElement().getStyle().set("font-size", "16px");
+            reportsLink.add(reportssText);
             reportsLink.addClassName("side-link");
+            reportsLink.getElement().getStyle().set("width", "90%");
+            reportsLink.getElement().getStyle().set("height", "var(--lumo-space-m)");
+            reportsLink.getElement().getStyle().set("vertical-align", "text-bottom");
+            reportsLink.getElement().getStyle().set("padding", "var(--lumo-space-m)");
+            reportsLink.getElement().getStyle().set("background-color", "var(--lumo-contrast-30pct)");
             reportsLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-            VerticalLayout sideBarLayout = new VerticalLayout(dashboardLink, reportsLink);
+            VerticalLayout sideBarLayout = new VerticalLayout(dashboardLink, usersLink, reportsLink);
+            sideBarLayout.setSizeFull();
+            sideBarLayout.getElement().getStyle().set("background-color", "var(--lumo-contrast-30pct)");
+            sideBarLayout.getElement().getStyle().set("padding", "var(--lumo-space-m)");
 
             SideMenu sideMenu = new SideMenu();
             sideMenu.addMenuItem("Dashboard", VaadinIcons.HOME, () -> {
